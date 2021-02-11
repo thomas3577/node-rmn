@@ -1,0 +1,42 @@
+{
+  "name": "node-rmn",
+  "version": "1.0.0",
+  "description": "Fast deletion of Node_Modules",
+  "main": "index.js",
+  "bin": {
+    "rmn": "./bin/rmn.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "scripts": {
+    "lint": "eslint **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomas3577/node-rmn.git"
+  },
+  "keywords": [
+    "cli",
+    "rimraf"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thomas3577/node-rmn/issues"
+  },
+  "homepage": "https://github.com/thomas3577/node-rmn#readme",
+  "dependencies": {
+    "arg": "^5.0.0",
+    "rmfr": "^2.0.0",
+    "yesno": "^0.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1"
+  }
+}

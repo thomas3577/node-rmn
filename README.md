@@ -1,2 +1,7 @@
 # node-rmn
-Fast deletion of Node_Modules
+
+Fast deletion of ./node_modules
+
+```bash
+  rmn
+```
