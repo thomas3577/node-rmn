@@ -5,46 +5,43 @@ import yesno from 'yesno';
 import rmfr from 'rmfr';
 
 const nodeModulesFolder = './node_modules';
-const deletePath = join(resolve(), nodeModulesFolder);
+const log = console.log;
 
-const promptFor = async (ask) => {
-  if (ask) {
-    return await yesno({
-      question: `\n  Path: ${deletePath}\n\nThis directory is to be deleted? yes [Y] or no [n] (default):`,
-      defaultValue: false,
-      yesValues: ['yes', 'Y'],
-      noValues: ['no', 'n']
-    });
-  }
-
-  return true;
+const promptFor = async (ask, path) => {
+  return await yesno({
+    question: `\n  Path: ${path}\n\nThis directory is to be deleted? yes [Y] or no [n] (default):`,
+    defaultValue: false,
+    yesValues: ['yes', 'Y'],
+    noValues: ['no', 'n']
+  });
 };
 
-const doPrompt = (rawArgs) => {
-  const args = arg({
+const getArgs = (argv) => {
+  return arg({
     '--show-before': Boolean,
     '-s': '--show-before'
   }, {
-    argv: rawArgs.slice(2)
+    argv: argv.slice(2)
   });
-
-  return args['--show-before'] || false;
 };
 
-export const cli = async (args) => {
-  const directorsExists = existsSync(deletePath);
+export const cli = async (argv) => {
+  const nodeModulesPath = join(resolve(), nodeModulesFolder);
+  const exists = existsSync(nodeModulesPath);
 
-  if (!directorsExists) {
-    return console.error(`Directory not exists! \n  Path: ${deletePath}\nAborted!`);
+  if (!exists) {
+    return console.error(`Directory not exists! \n  Path: ${nodeModulesPath}\nAborted!`);
   }
 
-  const answer = await promptFor(doPrompt(args));
+  const args = getArgs(argv);
+  const ask = args['--show-before'] || false;
+  const answer = !ask || await promptFor(ask, nodeModulesPath);
 
   if (answer) {
     return await rmfr(nodeModulesFolder)
-      .catch((err) => console.error('Error!', err))
-      .then(() => console.log('Done!'));
+      .catch((err) => log('Error!', err))
+      .then(() => log('Done!'));
   }
 
-  console.log('Aborted!');
+  log('Aborted!');
 };

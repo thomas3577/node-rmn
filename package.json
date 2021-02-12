@@ -11,7 +11,7 @@
   },
   "type": "module",
   "scripts": {
-    "lint": "eslint **/*.js"
+    "test": "eslint **/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,9 +19,10 @@
   },
   "keywords": [
     "cli",
-    "rimraf"
+    "rmfr",
+    "node_modules"
   ],
-  "author": "",
+  "author": "Thomas Huber <thomas3577@gmx.net>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/thomas3577/node-rmn/issues"
