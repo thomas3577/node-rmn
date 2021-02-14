@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { join, resolve, sep } from 'path';
 import { existsSync } from 'fs';
 import arg from 'arg';
 import yesno from 'yesno';
@@ -25,12 +25,41 @@ const getArgs = (argv) => {
   });
 };
 
-export const cli = async (argv) => {
-  const nodeModulesPath = join(resolve(), nodeModulesFolder);
-  const exists = existsSync(nodeModulesPath);
+const findPath = () => {
+  let path = resolve();
+  let nodeModulesPath = join(path, nodeModulesFolder);
 
-  if (!exists) {
-    return console.error(`Directory not exists! \n  Path: ${nodeModulesPath}\nAborted!`);
+  if (existsSync(nodeModulesPath)) {
+    return nodeModulesPath;
+  }
+
+  nodeModulesPath = path()
+    .split(sep)
+    .reverse()
+    .find((folder) => {
+      path = path.substring(0, path.length - (folder.length + 1));
+
+      return path.length > 0 && existsSync(join(path, nodeModulesFolder));
+    });
+
+  return nodeModulesPath;
+};
+
+export const rmn = async () => {
+  const nodeModulesPath = findPath();
+
+  if (!nodeModulesPath) {
+    return log('Error! Could not find node_modules');
+  }
+
+  await rmfr(nodeModulesPath);
+};
+
+export const cli = async (argv) => {
+  const nodeModulesPath = findPath();
+
+  if (!nodeModulesPath) {
+    return log('Error! Could not find node_modules');
   }
 
   const args = getArgs(argv);
@@ -45,3 +74,5 @@ export const cli = async (argv) => {
 
   log('Aborted!');
 };
+
+export default rmn;
