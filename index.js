@@ -1,3 +1,3 @@
-import { cli } from './src/rmn.js';
+import { rmn } from './src/rmn.js';
 
-cli(process.argv);
+rmn();
