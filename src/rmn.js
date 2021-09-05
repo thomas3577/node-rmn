@@ -7,23 +7,19 @@ import rmfr from 'rmfr';
 const nodeModulesFolder = './node_modules';
 const log = console.log;
 
-const promptFor = async (ask, path) => {
-  return await yesno({
-    question: `\n  Path: ${path}\n\nThis directory is to be deleted? yes [Y] or no [n] (default):`,
-    defaultValue: false,
-    yesValues: ['yes', 'Y'],
-    noValues: ['no', 'n']
-  });
-};
+const promptFor = async (ask, path) => await yesno({
+  question: `\n  Path: ${path}\n\nThis directory is to be deleted? yes [Y] or no [n] (default):`,
+  defaultValue: false,
+  yesValues: ['yes', 'Y'],
+  noValues: ['no', 'n']
+});
 
-const getArgs = (argv) => {
-  return arg({
-    '--show-before': Boolean,
-    '-s': '--show-before'
-  }, {
-    argv: argv.slice(2)
-  });
-};
+const getArgs = argv => arg({
+  '--show-before': Boolean,
+  '-s': '--show-before'
+}, {
+  argv: argv.slice(2)
+});
 
 const findPath = () => {
   let path = resolve();
