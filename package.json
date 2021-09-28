@@ -1,7 +1,7 @@
 {
   "name": "node-rmn",
   "version": "1.0.0",
-  "description": "Fast deletion of Node_Modules",
+  "description": "Fast deletion of node_modules",
   "main": "index.js",
   "bin": {
     "rmn": "./bin/rmn.js"
