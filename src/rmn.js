@@ -25,18 +25,16 @@ const findPath = () => {
   let path = resolve();
   let nodeModulesPath = join(path, nodeModulesFolder);
 
-  if (existsSync(nodeModulesPath)) {
-    return nodeModulesPath;
+  if (!existsSync(nodeModulesPath)) {
+    nodeModulesPath = path()
+      .split(sep)
+      .reverse()
+      .find((folder) => {
+        path = path.substring(0, path.length - (folder.length + 1));
+
+        return path.length > 0 && existsSync(join(path, nodeModulesFolder));
+      });
   }
-
-  nodeModulesPath = path()
-    .split(sep)
-    .reverse()
-    .find((folder) => {
-      path = path.substring(0, path.length - (folder.length + 1));
-
-      return path.length > 0 && existsSync(join(path, nodeModulesFolder));
-    });
 
   return nodeModulesPath;
 };
@@ -44,14 +42,12 @@ const findPath = () => {
 export const rmn = async () => {
   const nodeModulesPath = findPath();
 
-  if (!nodeModulesPath) {
-    return log('Error! Could not find node_modules');
-  }
-
-  await rmfr(nodeModulesPath);
+  return nodeModulesPath
+    ? await rmfr(nodeModulesPath)
+    : log('Error! Could not find node_modules');
 };
 
-export const cli = async (argv) => {
+export const cli = async argv => {
   const nodeModulesPath = findPath();
 
   if (!nodeModulesPath) {
@@ -62,13 +58,11 @@ export const cli = async (argv) => {
   const ask = args['--show-before'] || false;
   const answer = !ask || await promptFor(ask, nodeModulesPath);
 
-  if (answer) {
-    return await rmfr(nodeModulesFolder)
-      .catch((err) => log('Error!', err))
-      .then(() => log('Done!'));
-  }
-
-  log('Aborted!');
+  return answer
+    ? await rmfr(nodeModulesFolder)
+      .catch(err => log('Error!', err))
+      .then(() => log('Done!'))
+    : log('Aborted!');
 };
 
 export default rmn;
