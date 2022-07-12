@@ -1,6 +1,6 @@
 {
   "name": "@thomas3577/node-rmn",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fast deletion of node_modules",
   "main": "index.js",
   "bin": {
@@ -20,10 +20,12 @@
   "keywords": [
     "cli",
     "rmfr",
+    "rimraf",
     "node_modules"
   ],
   "author": "Thomas Huber <thomas3577@gmx.net>",
-  "license": "ISC",
+  "license": "MIT",
+  "private": true,
   "bugs": {
     "url": "https://github.com/thomas3577/node-rmn/issues"
   },
