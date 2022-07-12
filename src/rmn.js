@@ -1,9 +1,11 @@
 import { join, resolve, sep } from 'path';
 import { existsSync } from 'fs';
+import { promisify } from 'util';
 import arg from 'arg';
 import yesno from 'yesno';
-import rmfr from 'rmfr';
+import rimraf from 'rimraf';
 
+const rmfr = promisify(rimraf);
 const nodeModulesFolder = './node_modules';
 const log = console.log;
 
