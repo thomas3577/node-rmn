@@ -1,11 +1,9 @@
 import { join, resolve, sep } from 'path';
 import { existsSync } from 'fs';
-import { promisify } from 'util';
+import { rimraf } from 'rimraf';
 import arg from 'arg';
 import yesno from 'yesno';
-import rimraf from 'rimraf';
 
-const rmfr = promisify(rimraf);
 const nodeModulesFolder = './node_modules';
 const log = console.log;
 
@@ -45,7 +43,7 @@ export const rmn = async () => {
   const nodeModulesPath = findPath();
 
   return nodeModulesPath
-    ? await rmfr(nodeModulesPath)
+    ? await rimraf(nodeModulesPath)
     : log('Error! Could not find node_modules');
 };
 
@@ -61,7 +59,7 @@ export const cli = async argv => {
   const answer = !ask || await promptFor(ask, nodeModulesPath);
 
   return answer
-    ? await rmfr(nodeModulesFolder)
+    ? await rimraf(nodeModulesFolder)
       .catch(err => log('Error!', err))
       .then(() => log('Done!'))
     : log('Aborted!');
