@@ -32,11 +32,11 @@
   "homepage": "https://github.com/thomas3577/node-rmn#readme",
   "dependencies": {
     "arg": "^5.0.2",
-    "rimraf": "^4.4.0",
+    "rimraf": "^4.4.1",
     "yesno": "^0.4.0"
   },
   "devDependencies": {
-    "eslint": "^8.35.0",
+    "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
