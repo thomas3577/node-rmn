@@ -4,13 +4,17 @@
     "commonjs": true,
     "es6": true
   },
-  "extends": "standard",
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:node/recommended"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2020
+    "ecmaVersion": 2022
   },
   "rules": {
     "semi": [
@@ -35,6 +39,17 @@
         "max": 1
       }
     ],
+    "max-len": [
+      "error",
+      {
+        "code": 280
+      }
+    ],
+    "id-blacklist": "off",
+    "id-match": "off",
+    "space-before-function-paren": "off",
+    "no-underscore-dangle": "off",
+    "no-shadow": "off",
     "eol-last": "off"
   }
 }

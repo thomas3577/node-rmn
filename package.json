@@ -3,20 +3,24 @@
   "version": "1.0.2",
   "description": "Fast deletion of node_modules",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "rmn": "./bin/rmn.js"
   },
+  "scripts": {
+    "lint": "eslint **/*.js"
+  },
   "publishConfig": {
     "access": "public"
-  },
-  "type": "module",
-  "scripts": {
-    "test": "eslint **/*.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thomas3577/node-rmn.git"
   },
+  "bugs": {
+    "url": "https://github.com/thomas3577/node-rmn/issues"
+  },
+  "homepage": "https://github.com/thomas3577/node-rmn#readme",
   "keywords": [
     "cli",
     "rmfr",
@@ -26,10 +30,6 @@
   "author": "Thomas Huber <thomas3577@gmx.net>",
   "license": "MIT",
   "private": true,
-  "bugs": {
-    "url": "https://github.com/thomas3577/node-rmn/issues"
-  },
-  "homepage": "https://github.com/thomas3577/node-rmn#readme",
   "dependencies": {
     "arg": "^5.0.2",
     "rimraf": "^5.0.0",
@@ -39,7 +39,6 @@
     "eslint": "^8.38.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-node": "^11.1.0"
   }
 }
