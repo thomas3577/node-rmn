@@ -1,5 +1,5 @@
-import { join, resolve, sep } from 'path';
-import { existsSync } from 'fs';
+import { join, resolve, sep } from 'node:path';
+import { existsSync } from 'node:fs';
 import { rimraf } from 'rimraf';
 import arg from 'arg';
 import yesno from 'yesno';
