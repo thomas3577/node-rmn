@@ -1,6 +1,6 @@
 {
   "name": "@thomas3577/node-rmn",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Fast deletion of node_modules",
   "main": "index.js",
   "type": "module",
@@ -37,5 +37,20 @@
   },
   "devDependencies": {
     "eslint": "^9.1.1"
+  },
+  "cspell": {
+    "version": "0.2",
+    "useGitignore": true,
+    "language": "en",
+    "allowCompoundWords": true,
+    "ignorePaths": [
+      ".vscode",
+      ".git"
+    ],
+    "words": [
+      "paren",
+      "rmfr",
+      "yesno"
+    ]
   }
 }
