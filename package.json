@@ -1,6 +1,6 @@
 {
   "name": "@thomas3577/node-rmn",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Fast deletion of node_modules",
   "main": "index.js",
   "type": "module",
@@ -32,11 +32,11 @@
   "private": true,
   "dependencies": {
     "arg": "^5.0.2",
-    "rimraf": "^5.0.5",
+    "rimraf": "^5.0.7",
     "yesno": "^0.4.0"
   },
   "devDependencies": {
-    "eslint": "^9.2.0"
+    "eslint": "^9.3.0"
   },
   "cspell": {
     "version": "0.2",
