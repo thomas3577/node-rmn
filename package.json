@@ -1,6 +1,6 @@
 {
   "name": "@thomas3577/node-rmn",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Fast deletion of node_modules",
   "main": "index.js",
   "type": "module",

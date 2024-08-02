@@ -26,7 +26,7 @@ const findPath = () => {
   let nodeModulesPath = join(path, nodeModulesFolder);
 
   if (!existsSync(nodeModulesPath)) {
-    nodeModulesPath = path()
+    nodeModulesPath = path
       .split(sep)
       .reverse()
       .find((folder) => {
