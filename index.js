@@ -1,12 +1,25 @@
-import { join, resolve, sep } from 'node:path';
+import { join, resolve, sep, dirname } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { rimraf } from 'rimraf';
 import arg from 'arg';
 import yesno from 'yesno';
-import { getVersion } from './version.js';
 
 const nodeModulesFolder = './node_modules';
 const log = console.log;
+
+const getVersion = async () => {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+
+  const packageFileName = './package.json';
+  const packageJsonPath = join(__dirname, packageFileName);
+  const packageJsonString = await readFile(packageJsonPath, 'utf-8');
+  const { version } = JSON.parse(packageJsonString);
+
+  return version;
+};
 
 const promptFor = async (ask, path) => await yesno({
   question: `\n  Path: ${path}\n\nThis directory is to be deleted? yes [Y] or no [n] (default):`,
@@ -19,7 +32,7 @@ const getArgs = argv => arg({
   '--show-before': Boolean,
   '-s': '--show-before',
   '--version': Boolean,
-  '-v': '--version',
+  '-v': '--version'
 }, {
   argv: argv.slice(2)
 });
@@ -43,17 +56,17 @@ const findPath = () => {
 };
 
 export const cli = async argv => {
-  const nodeModulesPath = findPath();
-
-  if (!nodeModulesPath) {
-    return log('Error! Could not find node_modules');
-  }
-
   const args = getArgs(argv);
 
   if (args['--version']) {
     const version = await getVersion();
     return log(`v${version}`);
+  }
+
+  const nodeModulesPath = findPath();
+
+  if (!nodeModulesPath) {
+    return log('Error! Could not find node_modules');
   }
 
   const ask = args['--show-before'] || false;
