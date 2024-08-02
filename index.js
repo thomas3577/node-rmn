@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { rimraf } from 'rimraf';
 import arg from 'arg';
 import yesno from 'yesno';
+import { getVersion } from './version.js';
 
 const nodeModulesFolder = './node_modules';
 const log = console.log;
@@ -16,7 +17,9 @@ const promptFor = async (ask, path) => await yesno({
 
 const getArgs = argv => arg({
   '--show-before': Boolean,
-  '-s': '--show-before'
+  '-s': '--show-before',
+  '--version': Boolean,
+  '-v': '--version',
 }, {
   argv: argv.slice(2)
 });
@@ -55,6 +58,12 @@ export const cli = async argv => {
   }
 
   const args = getArgs(argv);
+
+  if (args['--version']) {
+    const version = await getVersion();
+    return log(`v${version}`);
+  }
+
   const ask = args['--show-before'] || false;
   const answer = !ask || await promptFor(ask, nodeModulesPath);
 
