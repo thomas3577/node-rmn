@@ -42,14 +42,6 @@ const findPath = () => {
   return nodeModulesPath;
 };
 
-export const rmn = async () => {
-  const nodeModulesPath = findPath();
-
-  return nodeModulesPath
-    ? await rimraf(nodeModulesPath)
-    : log('Error! Could not find node_modules');
-};
-
 export const cli = async argv => {
   const nodeModulesPath = findPath();
 
@@ -73,5 +65,3 @@ export const cli = async argv => {
       .then(() => log('Done!'))
     : log('Aborted!');
 };
-
-rmn();
