@@ -1,8 +1,7 @@
 import { join, resolve, sep, dirname } from 'node:path';
-import { readFile } from 'node:fs/promises';
+import { readFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { rimraf } from 'rimraf';
 import arg from 'arg';
 import yesno from 'yesno';
 
@@ -73,8 +72,8 @@ export const cli = async argv => {
   const answer = !ask || await promptFor(ask, nodeModulesPath);
 
   return answer
-    ? await rimraf(nodeModulesFolder)
-      .catch(err => log('Error!', err))
+    ? await rm(nodeModulesFolder, { recursive: true, force: true })
       .then(() => log('Done!'))
+      .catch(err => log('Error!', err))
     : log('Aborted!');
 };
