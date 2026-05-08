@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import arg from 'arg';
 import yesno from 'yesno';
 
-const nodeModulesFolder = './node_modules';
+const nodeModulesFolder = 'node_modules';
 const log = console.log;
 
 const getVersion = async () => {
@@ -20,10 +20,10 @@ const getVersion = async () => {
   return version;
 };
 
-const promptFor = async (ask, path) => await yesno({
+const promptFor = async path => await yesno({
   question: `\n  Path: ${path}\n\nThis directory is to be deleted? yes [Y] or no [n] (default):`,
   defaultValue: false,
-  yesValues: ['yes', 'Y'],
+  yesValues: ['yes', 'y', 'Y'],
   noValues: ['no', 'n']
 });
 
@@ -37,43 +37,45 @@ const getArgs = argv => arg({
 });
 
 const findPath = () => {
-  let path = resolve();
-  let nodeModulesPath = join(path, nodeModulesFolder);
+  let currentPath = resolve();
 
-  if (!existsSync(nodeModulesPath)) {
-    nodeModulesPath = path
-      .split(sep)
-      .reverse()
-      .find((folder) => {
-        path = path.substring(0, path.length - (folder.length + 1));
+  while (true) {
+    const nodeModulesPath = join(currentPath, nodeModulesFolder);
+    if (existsSync(nodeModulesPath)) {
+      return nodeModulesPath;
+    }
 
-        return path.length > 0 && existsSync(join(path, nodeModulesFolder));
-      });
+    const parentPath = dirname(currentPath);
+    if (parentPath === currentPath) {
+      return null;
+    }
+
+    currentPath = parentPath;
   }
-
-  return nodeModulesPath;
 };
 
 export const cli = async argv => {
-  const args = getArgs(argv);
+  try {
+    const args = getArgs(argv);
+    if (args['--version']) {
+      const version = await getVersion();
+      return log(`v${version}`);
+    }
 
-  if (args['--version']) {
-    const version = await getVersion();
-    return log(`v${version}`);
+    const nodeModulesPath = findPath();
+    if (!nodeModulesPath) {
+      return log('Error! Could not find node_modules');
+    }
+
+    const ask = args['--show-before'] || false;
+    const answer = !ask || await promptFor(nodeModulesPath);
+    if (!answer) {
+      return log('Aborted!');
+    }
+
+    await rm(nodeModulesPath, { recursive: true, force: true });
+    return log('Done!');
+  } catch (err) {
+    return log('Error!', err);
   }
-
-  const nodeModulesPath = findPath();
-
-  if (!nodeModulesPath) {
-    return log('Error! Could not find node_modules');
-  }
-
-  const ask = args['--show-before'] || false;
-  const answer = !ask || await promptFor(ask, nodeModulesPath);
-
-  return answer
-    ? await rm(nodeModulesFolder, { recursive: true, force: true })
-      .then(() => log('Done!'))
-      .catch(err => log('Error!', err))
-    : log('Aborted!');
 };
