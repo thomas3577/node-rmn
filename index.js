@@ -1,8 +1,8 @@
-import { join, resolve, sep, dirname } from 'node:path';
+import { join, resolve, dirname } from 'node:path';
 import { readFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import arg from 'arg';
+import { parseArgs } from 'node:util';
 import yesno from 'yesno';
 
 const nodeModulesFolder = 'node_modules';
@@ -27,14 +27,13 @@ const promptFor = async path => await yesno({
   noValues: ['no', 'n']
 });
 
-const getArgs = argv => arg({
-  '--show-before': Boolean,
-  '-s': '--show-before',
-  '--version': Boolean,
-  '-v': '--version'
-}, {
-  argv: argv.slice(2)
-});
+const getArgs = argv => parseArgs({
+  args: argv.slice(2),
+  options: {
+    'show-before': { type: 'boolean', short: 's' },
+    version: { type: 'boolean', short: 'v' }
+  }
+}).values;
 
 const findPath = () => {
   let currentPath = resolve();
@@ -57,7 +56,7 @@ const findPath = () => {
 export const cli = async argv => {
   try {
     const args = getArgs(argv);
-    if (args['--version']) {
+    if (args.version) {
       const version = await getVersion();
       return log(`v${version}`);
     }
@@ -67,7 +66,7 @@ export const cli = async argv => {
       return log('Error! Could not find node_modules');
     }
 
-    const ask = args['--show-before'] || false;
+    const ask = args['show-before'] || false;
     const answer = !ask || await promptFor(nodeModulesPath);
     if (!answer) {
       return log('Aborted!');
