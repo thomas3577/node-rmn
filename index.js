@@ -1,4 +1,4 @@
-import { join, resolve, sep, dirname } from 'node:path';
+import { join, resolve, dirname } from 'node:path';
 import { readFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

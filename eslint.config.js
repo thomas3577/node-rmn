@@ -1,5 +1,19 @@
 export default {
+  languageOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    globals: {
+      console: 'readonly',
+      process: 'readonly'
+    }
+  },
+  linterOptions: {
+    reportUnusedDisableDirectives: 'error'
+  },
   rules: {
+    'no-unused-vars': 'error',
+    'no-undef': 'error',
+    eqeqeq: 'error',
     semi: [
       'error',
       'always'
