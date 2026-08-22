@@ -31,7 +31,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "arg": "^5.0.2",
     "yesno": "^0.4.0"
   },
   "devDependencies": {
