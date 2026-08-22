@@ -30,7 +30,6 @@
   ],
   "author": "Thomas Huber <thomas3577@gmx.net>",
   "license": "MIT",
-  "private": true,
   "dependencies": {
     "yesno": "^0.4.0"
   },
