@@ -34,7 +34,7 @@
     "yesno": "^0.4.0"
   },
   "devDependencies": {
-    "eslint": "^10.9.0"
+    "eslint": "^10.9.1"
   },
   "cspell": {
     "version": "0.2",
